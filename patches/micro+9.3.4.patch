@@ -1,0 +1,13 @@
+diff --git a/node_modules/micro/lib/handler.js b/node_modules/micro/lib/handler.js
+index 4b8fd1c..a8bb004 100644
+--- a/node_modules/micro/lib/handler.js
++++ b/node_modules/micro/lib/handler.js
+@@ -5,7 +5,7 @@ module.exports = async file => {
+ 	let mod;
+ 
+ 	try {
+-		mod = await require(file); // Await to support exporting Promises
++		mod = file.endsWith('.mjs') ? await import(file) : await require(file); // Await to support exporting Promises
+ 
+ 		if (mod && typeof mod === 'object') {
+ 			mod = await mod.default; // Await to support es6 module's default export

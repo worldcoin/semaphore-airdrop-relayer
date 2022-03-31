@@ -1,0 +1,16 @@
+{
+	"name": "semaphore-relayer",
+	"version": "1.0.0",
+	"main": "src/index.mjs",
+	"scripts": {
+		"start": "micro",
+		"postinstall": "patch-package"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"defender-relay-client": "^1.19.0",
+		"ethers": "^5.6.2",
+		"micro": "^9.3.4",
+		"patch-package": "^6.4.7"
+	}
+}
