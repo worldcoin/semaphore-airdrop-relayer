@@ -1,0 +1,15 @@
+apiVersion: v2
+version: "0.1.0"
+name: semaphore-airdrop-relayer
+appVersion: "0.0.1"
+description: "A server that relays proofs to Semaphore Airdrop contracts."
+home: https://github.com/worldcoin/semaphore-airdrop-relayer
+sources:
+  - https://github.com/worldcoin/semaphore-airdrop-relayer
+keywords:
+  - worldcoin
+  - semaphore
+  - relayer
+maintainers:
+  - name: Miguel Piedrafita
+    email: miguel.piedrafita@worldcoin.org

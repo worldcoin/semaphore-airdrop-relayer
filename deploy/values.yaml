@@ -1,0 +1,36 @@
+image:
+  image: "ghcr.io/worldcoin/semaphore-airdrop-relayer"
+  tag: # Defaults to `v` + appVersion
+  arch: amd64 # Either amd64 or arm64
+  pullSecret:
+
+labels:
+  component: # Defaults to name
+  partOf: semaphore-airdrop
+  createdBy:
+
+environment: prod
+replicas: 1
+region: "us-east-1"
+
+canary:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 16.0
+    memory: 4Gi
+
+# Env values can be strings (to be prefixed with `value:`) or objects
+env:
+  NETWORK: "rinkeby"
+
+# Spec ingress policy for the `api` and `metrics` port.
+# Values are a list of NetworkPolicyPeer v1 objects, empty means allow all.
+ingress:
+  host: "semaphore-airdrop.demo.worldcoin.dev"
+  api:
+  metrics:
