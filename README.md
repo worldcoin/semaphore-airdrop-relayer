@@ -29,3 +29,8 @@ interface RelayerRequest {
 ## License
 
 This project is open-sourced software licensed under the MIT license. See the [License file](LICENSE) for more information.
+
+
+## Deploy through helm from local
+Select context to be crypto prod cluster
+`helm upgrade --install airdrops-relayer ./chart`
