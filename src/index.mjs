@@ -24,7 +24,8 @@ export default async (req, res) => {
 
 	const [call, gasLimit] = await Promise.all([
 		contract.populateTransaction.claim(receiver, root, nullifierHash, proof),
-		contract.estimateGas.claim(receiver, root, nullifierHash, proof),
+		1_000_000
+		// contract.estimateGas.claim(receiver, root, nullifierHash, proof),
 	]);
 
 	const tx = await relayer.sendTransaction({
