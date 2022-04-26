@@ -33,6 +33,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CONTRACT_ADDRESS
+              value: "0x330C8452C879506f313D1565702560435b0fee4C"
+            - name: OZ_KEY
+              value: "FjeQtqpLJdzYyWSHmck5UtY6e5ViVcMb"
+            - name: OZ_SECRET
+              value: "XXXXX"
+            - name: NETWORK
+              value: "https://polygon-mumbai.g.alchemy.com/v2/wSPKj06s4P-p9NTh6ieLT_cGxV2khwTT"
           ports:
             - name: http
               containerPort: 3000

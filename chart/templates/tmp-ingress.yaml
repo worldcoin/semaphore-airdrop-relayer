@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: orb-manager-ingress
+  name: relayer-ingress
   annotations:
     kubernetes.io/ingress.class: traefik
     ingress.kubernetes.io/protocol: http
@@ -16,6 +16,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: "airdrop-relayer"
+                name: "airdrops-relayer-airdrop-relayer"
                 port:
                   number: 80
