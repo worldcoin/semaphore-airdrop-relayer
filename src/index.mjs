@@ -2,6 +2,7 @@ import { json, send } from "micro";
 import { Relayer } from "defender-relay-client";
 import { Contract, getDefaultProvider } from "ethers";
 import SemaphoreAirdrop from "./abi/SemaphoreAirdrop.json" assert { type: "json" };
+import SemaphoreMultiAirdrop from "./abi/SemaphoreMultiAirdrop.json" assert { type: "json" };
 
 const relayer = new Relayer({
 	apiKey: process.env.OZ_KEY,
@@ -9,7 +10,7 @@ const relayer = new Relayer({
 });
 const contract = new Contract(
 	process.env.CONTRACT_ADDRESS,
-	SemaphoreAirdrop,
+	process.env.USE_MULTI ? SemaphoreMultiAirdrop : SemaphoreAirdrop,
 	getDefaultProvider(process.env.NETWORK)
 );
 
