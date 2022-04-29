@@ -12,6 +12,7 @@ While you can set up the environment yourself, we provide a [Docker image](https
 - `OZ_SECRET` OpenZeppelin Defender Relayer Secret
 - `CONTRACT_ADDRESS` Address of the airdrop contract to use
 - `NETWORK` The network to use
+- `USE_MULTI` Whether to use the multi-airdrop contract instead of the single airdrop one
 
 ## Usage
 
