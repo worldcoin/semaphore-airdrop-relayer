@@ -19,13 +19,32 @@ const contract = new Contract(
 );
 
 export default async (req, res) => {
-	const { receiver, root, nullifierHash, proof } = await json(req);
-	if (!receiver || !root || !nullifierHash || !proof) {
+	const { airdropId, receiver, root, nullifierHash, proof } = await json(req);
+	if (
+		!receiver ||
+		!root ||
+		!nullifierHash ||
+		!proof ||
+		(!airdropId && process.env.USE_MULTI)
+	) {
 		return send(res, 400, "Invalid Request");
 	}
 
 	const [call, gasLimit] = await Promise.all([
-		contract.populateTransaction.claim(receiver, root, nullifierHash, proof),
+		process.env.USE_MULTI
+			? contract.populateTransaction.claim(
+					airdropId,
+					receiver,
+					root,
+					nullifierHash,
+					proof
+			  )
+			: contract.populateTransaction.claim(
+					receiver,
+					root,
+					nullifierHash,
+					proof
+			  ),
 		1_000_000,
 		// contract.estimateGas.claim(receiver, root, nullifierHash, proof),
 	]);
