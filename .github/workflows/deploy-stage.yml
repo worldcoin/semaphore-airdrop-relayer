@@ -9,3 +9,4 @@ jobs:
     with:
       ecr_repo: semaphore-airdrop-relayer
       environment: stage
+    secrets: inherit
