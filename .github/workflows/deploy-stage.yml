@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-and-push-image-stage:
-    uses: ./.github/workflows/ecr-build-push.yaml
+    uses: ./.github/workflows/ecr-build-push.yml
     with:
       ecr_repo: semaphore-airdrop-relayer
       environment: stage
