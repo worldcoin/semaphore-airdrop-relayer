@@ -6,15 +6,14 @@ on:
       ecr_repo:
         required: true
         type: string
-    secrets:
-      GIT_HUB_TOKEN:
+      environment:
         required: true
-      AWS_ACCOUNT_ID:
-        required: true
+        type: string
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: stage
+    environment: ${{ inputs.environment }}
     permissions:
       id-token: write
       contents: read

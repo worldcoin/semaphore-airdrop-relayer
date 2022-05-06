@@ -1,0 +1,11 @@
+name: Deploy app on stage
+
+on:
+  push
+
+jobs:
+  build-and-push-image-stage:
+    uses: ./.github/workflows/ecr-build-push.yaml
+    with:
+      ecr_repo: semaphore-airdrop-relayer
+      environment: stage
