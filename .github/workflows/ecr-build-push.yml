@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: worldcoin/gh-actions
-          ref: v1
+          ref: v2
           token: ${{ secrets.GIT_HUB_TOKEN }}
           path: .github/actions/gh-actions
       - name: Build & Push to ECR
@@ -32,3 +32,4 @@ jobs:
         with:
           ecr_repo: ${{ inputs.ecr_repo }}
           aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          snyk_token: ${{ secrets.SNYK_TOKEN }}
