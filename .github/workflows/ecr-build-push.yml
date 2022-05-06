@@ -28,7 +28,7 @@ jobs:
           ref: v2
           token: ${{ secrets.GIT_HUB_TOKEN }}
           path: .github/actions/gh-actions
-      - name: Build & Push to ECR on stage
+      - name: Build & Push to ECR
         uses: ./.github/actions/gh-actions/ecr-build-and-push
         with:
           ecr_repo: ${{ inputs.ecr_repo }}
