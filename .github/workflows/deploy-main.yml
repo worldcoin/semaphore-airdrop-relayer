@@ -1,4 +1,4 @@
-name: Deploy app on stage manual
+name: Deploy app on stage and prod
 on:
   branches:
     - main
