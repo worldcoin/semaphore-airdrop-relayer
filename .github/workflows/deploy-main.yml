@@ -1,10 +1,7 @@
 name: Deploy app on stage manual
-# on:
-#   pull_request:
-#     types: [opened, reopened]
-
 on:
-  push
+  branches:
+    - main
 
 jobs:
   build-and-push-image-stage:
@@ -13,11 +10,31 @@ jobs:
       ecr_repo: ${{ github.event.repository.name }}
       environment: stage
     secrets: inherit
-  deploy-eks-stage-manual:
+
+  deploy-eks-stage:
     needs: [build-and-push-image-stage]
     uses: ./.github/workflows/eks-deploy.yml
     with:
-      environment: stage-manual
+      environment: stage
+      aws_region: >-
+        ["us-east-1"]
+      service_name: ${{ github.event.repository.name }}
+      namespace: ${{ github.event.repository.name }}
+      cluster_name: crypto
+    secrets: inherit
+
+  build-and-push-image-prod:
+    uses: ./.github/workflows/ecr-build-push.yml
+    with:
+      ecr_repo: ${{ github.event.repository.name }}
+      environment: prod
+    secrets: inherit
+
+  deploy-eks-prod:
+    needs: [build-and-push-image-prod]
+    uses: ./.github/workflows/eks-deploy.yml
+    with:
+      environment: prod
       aws_region: >-
         ["us-east-1"]
       service_name: ${{ github.event.repository.name }}
