@@ -40,4 +40,5 @@ jobs:
       service_name: ${{ github.event.repository.name }}
       namespace: ${{ github.event.repository.name }}
       cluster_name: crypto-prod-us-east-1
+      values_filename: values-prod.yaml
     secrets: inherit
