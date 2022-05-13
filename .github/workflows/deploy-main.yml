@@ -39,5 +39,5 @@ jobs:
         ["us-east-1"]
       service_name: ${{ github.event.repository.name }}
       namespace: ${{ github.event.repository.name }}
-      cluster_name: crypto
+      cluster_name: crypto-prod-us-east-1
     secrets: inherit
