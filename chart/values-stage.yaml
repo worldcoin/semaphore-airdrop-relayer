@@ -1,0 +1,111 @@
+# Default values for semaphore-airdrop-relayer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+awsAccountID: "267301337261"
+awsRegion: us-east-1
+
+image:
+  name: semaphore-airdrop-relayer
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+container:
+  env:
+    - name: CONTRACT_ADDRESS
+      value: "0x330C8452C879506f313D1565702560435b0fee4C"
+    - name: OZ_KEY
+      value: "FjeQtqpLJdzYyWSHmck5UtY6e5ViVcMb"
+    - name: OZ_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: application
+          key: OZ_SECRET
+    - name: NETWORK
+      value: "https://polygon-mumbai.g.alchemy.com/v2/wSPKj06s4P-p9NTh6ieLT_cGxV2khwTT"
+  ports:
+    - name: http
+      containerPort: 3000
+      protocol: TCP
+  lifenessProbe: {}
+    # httpGet:
+    #   path: /
+    #   port: http
+  redinessProbe: {}
+    # httpGet:
+    #   path: /
+    #   port: http
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/protocol: http
+    traefik.frontend.rule.type: PathPrefix
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  hosts:
+    - host: relayer.stage-crypto.worldcoin.dev
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
