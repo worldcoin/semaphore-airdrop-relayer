@@ -1,7 +1,8 @@
 name: Deploy app on stage and prod
 on:
-  branches:
-    - main
+  push:
+    branches:
+      - 'main'
 
 jobs:
   build-and-push-image-stage:
