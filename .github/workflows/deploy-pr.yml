@@ -15,9 +15,10 @@ jobs:
     uses: ./.github/workflows/eks-deploy.yml
     with:
       environment: stage-manual
-      aws_region: >-
-        ["us-east-1"]
       service_name: ${{ github.event.repository.name }}
       namespace: ${{ github.event.repository.name }}
-      cluster_name: crypto
+      clusters: >-
+        [
+          {"region":"us-east-1", "name":"crypto"}
+        ]
     secrets: inherit
