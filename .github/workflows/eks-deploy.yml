@@ -44,4 +44,5 @@ jobs:
           helm upgrade --install -n ${{ inputs.namespace }} ${{ inputs.service_name }} ./chart
           -f ./chart/${{ inputs.values_filename }}
           --set image.tag=${{ github.sha }}
+          --set awsAccountID=${{ secrets.AWS_ACCOUNT_ID }}
           --set awsRegion=${{ matrix.region }}

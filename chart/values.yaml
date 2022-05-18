@@ -4,7 +4,7 @@
 
 replicaCount: 1
 
-awsAccountID: "267301337261"
+awsAccountID: ""
 awsRegion: us-east-1
 
 image:
