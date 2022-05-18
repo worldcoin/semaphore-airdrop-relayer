@@ -38,19 +38,11 @@ service:
   port: 80
 
 ingress:
-  enabled: true
-  className: ""
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    ingress.kubernetes.io/protocol: http
-    traefik.frontend.rule.type: PathPrefix
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
   hosts:
     - host: relayer.crypto.worldcoin.dev
       paths:
         - path: /
           pathType: Prefix
-  tls: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
