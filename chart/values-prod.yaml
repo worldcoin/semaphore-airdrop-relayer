@@ -1,0 +1,57 @@
+replicaCount: 1
+
+awsAccountID: ""
+awsRegion: us-east-1
+
+image:
+  name: semaphore-airdrop-relayer
+  pullPolicy: Always
+
+container:
+  env:
+    - name: CONTRACT_ADDRESS
+      value: "0x330C8452C879506f313D1565702560435b0fee4C"
+    - name: OZ_KEY
+      value: "FjeQtqpLJdzYyWSHmck5UtY6e5ViVcMb"
+    - name: OZ_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: application
+          key: OZ_SECRET
+    - name: NETWORK
+      value: "https://polygon-mumbai.g.alchemy.com/v2/wSPKj06s4P-p9NTh6ieLT_cGxV2khwTT"
+  ports:
+    - name: http
+      containerPort: 3000
+      protocol: TCP
+  lifenessProbe: {}
+    # httpGet:
+    #   path: /
+    #   port: http
+  redinessProbe: {}
+    # httpGet:
+    #   path: /
+    #   port: http
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  hosts:
+    - host: relayer.crypto.worldcoin.dev
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi

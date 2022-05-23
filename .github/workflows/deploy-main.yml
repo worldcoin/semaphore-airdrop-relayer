@@ -1,0 +1,47 @@
+name: Deploy app on stage and prod
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-and-push-image-stage:
+    uses: ./.github/workflows/ecr-build-push.yml
+    with:
+      ecr_repo: ${{ github.event.repository.name }}
+      environment: stage
+    secrets: inherit
+
+  deploy-eks-stage:
+    needs: [build-and-push-image-stage]
+    uses: ./.github/workflows/eks-deploy.yml
+    with:
+      environment: stage
+      service_name: ${{ github.event.repository.name }}
+      namespace: ${{ github.event.repository.name }}
+      clusters: >-
+        [
+          {"region":"us-east-1", "name":"crypto"}
+        ]
+    secrets: inherit
+
+  build-and-push-image-prod:
+    uses: ./.github/workflows/ecr-build-push.yml
+    with:
+      ecr_repo: ${{ github.event.repository.name }}
+      environment: prod
+    secrets: inherit
+
+  deploy-eks-prod:
+    needs: [build-and-push-image-prod]
+    uses: ./.github/workflows/eks-deploy.yml
+    with:
+      environment: prod
+      service_name: ${{ github.event.repository.name }}
+      namespace: ${{ github.event.repository.name }}
+      values_filename: values-prod.yaml
+      clusters: >-
+        [
+          {"region":"us-east-1", "name":"crypto-prod-us-east-1"}
+        ]
+    secrets: inherit

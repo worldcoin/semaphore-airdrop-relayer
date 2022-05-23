@@ -1,0 +1,35 @@
+name: Build, test and push docker image to ECR
+
+on:
+  workflow_call:
+    inputs:
+      ecr_repo:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Checkout GitHub Action Repo
+        uses: actions/checkout@v2
+        with:
+          repository: worldcoin/gh-actions
+          ref: v2
+          token: ${{ secrets.GIT_HUB_TOKEN }}
+          path: .github/actions/gh-actions
+      - name: Build & Push to ECR
+        uses: ./.github/actions/gh-actions/ecr-build-and-push
+        with:
+          ecr_repo: ${{ inputs.ecr_repo }}
+          aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          snyk_token: ${{ secrets.SNYK_TOKEN }}

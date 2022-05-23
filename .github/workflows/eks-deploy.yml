@@ -1,0 +1,48 @@
+name: Deploy app on EKS
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      service_name:
+        required: true
+        type: string
+      namespace:
+        required: true
+        type: string
+      clusters:
+        required: true
+        type: string
+      values_filename:
+        type: string
+        default: "values.yaml"
+
+jobs:
+  deploy-eks:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      matrix:
+        include: ${{ fromJson(inputs.clusters) }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/oidc/github-deploy
+          aws-region: ${{ matrix.region }}
+      - name: Connect to EKS cluster
+        run: aws eks --region ${{ matrix.region }} update-kubeconfig --name ${{ matrix.name }}
+      - name: Deploy to EKS
+        run: >
+          helm upgrade --install -n ${{ inputs.namespace }} ${{ inputs.service_name }} ./chart
+          -f ./chart/${{ inputs.values_filename }}
+          --set image.tag=${{ github.sha }}
+          --set awsAccountID=${{ secrets.AWS_ACCOUNT_ID }}
+          --set awsRegion=${{ matrix.region }}
