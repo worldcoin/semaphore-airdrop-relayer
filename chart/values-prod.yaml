@@ -10,16 +10,18 @@ image:
 container:
   env:
     - name: CONTRACT_ADDRESS
-      value: "0x330C8452C879506f313D1565702560435b0fee4C"
+      value: "0xE09913aE09E30289FC8dbf8CAbcccD0aACABeeE7"
     - name: OZ_KEY
-      value: "FjeQtqpLJdzYyWSHmck5UtY6e5ViVcMb"
+      value: "9Aa5krbtprCS4g1pFUgSEXy54EqhMRQU"
     - name: OZ_SECRET
       valueFrom:
         secretKeyRef:
           name: application
           key: OZ_SECRET
     - name: NETWORK
-      value: "https://polygon-mumbai.g.alchemy.com/v2/wSPKj06s4P-p9NTh6ieLT_cGxV2khwTT"
+      value: "https://polygon-mainnet.g.alchemy.com/v2/hzcZqY30Vz4qPylxo2XFyyewKYLVPyRL"
+    - name: USE_MULTI
+      value: "TRUE"
   ports:
     - name: http
       containerPort: 3000
