@@ -21,7 +21,7 @@ jobs:
       namespace: ${{ github.event.repository.name }}
       clusters: >-
         [
-          {"region":"us-east-1", "name":"crypto"}
+          {"region":"us-east-1", "name":"crypto-stage-us-east-1"}
         ]
     secrets: inherit
 
