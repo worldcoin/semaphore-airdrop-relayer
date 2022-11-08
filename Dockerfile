@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/nodejs16-debian11
+FROM node:18
 WORKDIR /app
 
 COPY package*.json ./
