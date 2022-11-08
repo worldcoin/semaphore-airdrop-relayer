@@ -55,5 +55,8 @@ export default async (req, res) => {
 		data: call.data,
 	});
 
-	return tx.hash;
+	return {
+		id: tx.transactionId,
+		hash: tx.hash,
+	}
 };
