@@ -1,0 +1,16 @@
+ignore:
+  SNYK-UPSTREAM-NODE-3092932:
+    - '*':
+      reson: no fix exists for now
+      expires: 2022-11-30T00:00:00.000Z
+      created: 2022-11-01T00:00:00.000Z
+  SNYK-UPSTREAM-NODE-3092933:
+    - '*':
+      reson: no fix exists for now
+      expires: 2022-11-30T00:00:00.000Z
+      created: 2022-11-01T00:00:00.000Z
+  SNYK-UPSTREAM-NODE-3105822:
+    - '*':
+      reson: no fix exists for now
+      expires: 2022-11-30T00:00:00.000Z
+      created: 2022-11-01T00:00:00.000Z
