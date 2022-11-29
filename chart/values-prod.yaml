@@ -12,7 +12,10 @@ container:
     - name: CONTRACT_ADDRESS
       value: "0xE09913aE09E30289FC8dbf8CAbcccD0aACABeeE7"
     - name: OZ_KEY
-      value: "9Aa5krbtprCS4g1pFUgSEXy54EqhMRQU"
+      valueFrom:
+        secretKeyRef:
+          name: application
+          key: OZ_KEY
     - name: OZ_SECRET
       valueFrom:
         secretKeyRef:
