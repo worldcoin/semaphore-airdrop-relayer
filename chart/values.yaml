@@ -10,7 +10,7 @@ image:
 container:
   env:
     - name: CONTRACT_ADDRESS
-      value: "0x4a48Ba4B0FafC605B06ac2AF7a57b0Cf44f4D4bE"
+      value: "0xf04c17e538107F58A7f7E42dcFCCD8B97Dc75D12"
     - name: OZ_KEY
       valueFrom:
         secretKeyRef:
