@@ -14,3 +14,8 @@ ignore:
       reson: no fix exists for now
       expires: 2022-11-30T00:00:00.000Z
       created: 2022-11-01T00:00:00.000Z
+  SNYK-JS-AXIOS-1579269
+    - '*':
+      reson: we need time to upgrade lib
+      expires: 2023-02-23T00:00:00.000Z
+      created: 2023-03-23T00:00:00.000Z
