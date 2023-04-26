@@ -10,8 +10,34 @@ jobs:
       ecr_repo: ${{ github.event.repository.name }}
       environment: stage
     secrets: inherit
-  deploy-eks-stage-manual:
+
+  list-stage-clusters:
+    runs-on: ubuntu-latest
+
     needs: [build-and-push-image-stage]
+    environment: stage
+
+    permissions:
+      id-token: write
+      contents: read
+
+    outputs:
+      cluster_list: ${{ steps.eks-list-clusters.outputs.cluster_list }}
+
+    steps:
+      - name: List EKS clusters
+        id: eks-list-clusters
+        uses: worldcoin/gh-actions/eks-list-clusters@eks-list-clusters-v1
+        with:
+          aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws_region_list: "us-east-1 us-west-1"
+          environment: "stage"
+
+  deploy-eks-stage-manual:
+    needs: [list-stage-clusters]
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.list-stage-clusters.outputs.cluster_list) }}
     uses: ./.github/workflows/eks-deploy.yml
     with:
       environment: stage-manual
@@ -19,6 +45,6 @@ jobs:
       namespace: ${{ github.event.repository.name }}
       clusters: >-
         [
-          {"region":"us-east-1", "name":"crypto-stage-us-east-1"}
+          {"region":${{ matrix.region }}, "name": ${{ matrix.cluster }}}
         ]
     secrets: inherit
