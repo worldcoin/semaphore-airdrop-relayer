@@ -25,6 +25,13 @@ jobs:
       cluster_list: ${{ steps.eks-list-clusters.outputs.cluster_list }}
 
     steps:
+      - name: Checkout GitHub Action Repo
+        uses: actions/checkout@v3
+        with:
+          repository: worldcoin/gh-actions
+          ref: feat/snyk-disabled
+          token: ${{ secrets.GIT_HUB_TOKEN }}
+          path: .github/actions/gh-actions
       - name: List EKS clusters
         id: eks-list-clusters
         uses: worldcoin/gh-actions/eks-list-clusters@eks-list-clusters-v1
