@@ -30,12 +30,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: worldcoin/gh-actions
-          ref: feat/snyk-disabled
+          ref: eks-list-clusters-v1
           token: ${{ secrets.GIT_HUB_TOKEN }}
           path: .github/actions/gh-actions
       - name: List EKS clusters
         id: eks-list-clusters
-        uses: ./.github/actions/gh-actions/eks-list-clusters@eks-list-clusters-v1
+        uses: ./.github/actions/gh-actions/eks-list-clusters
         with:
           aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws_region_list: "us-east-1 us-west-1"
