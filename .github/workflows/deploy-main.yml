@@ -57,6 +57,7 @@ jobs:
     secrets: inherit
 
   build-and-push-image-prod:
+    needs: [deploy-eks-stage]
     uses: ./.github/workflows/ecr-build-push.yml
     with:
       ecr_repo: ${{ github.event.repository.name }}
