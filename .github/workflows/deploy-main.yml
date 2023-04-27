@@ -2,7 +2,7 @@ name: Deploy app on stage and prod
 on:
   push:
     branches:
-      - 'INFRA-585_multicluster_deploy'
+      - 'main'
 
 jobs:
   build-and-push-image-stage:
@@ -94,17 +94,17 @@ jobs:
           aws_region_list: "us-east-1"
           environment: "prod"
 
-  # deploy-eks-prod:
-  #   needs: [list-prod-clusters]
-  #   strategy:
-  #     matrix:
-  #       include: ${{ fromJson(needs.list-prod-clusters.outputs.cluster_list) }}
-  #   uses: ./.github/workflows/eks-deploy.yml
-  #   with:
-  #     environment: prod
-  #     service_name: ${{ github.event.repository.name }}
-  #     namespace: ${{ github.event.repository.name }}
-  #     values_filename: values-prod.yaml
-  #     cluster: ${{ matrix.cluster }}
-  #     region: ${{ matrix.region }}
-  #   secrets: inherit
+  deploy-eks-prod:
+    needs: [list-prod-clusters]
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.list-prod-clusters.outputs.cluster_list) }}
+    uses: ./.github/workflows/eks-deploy.yml
+    with:
+      environment: prod
+      service_name: ${{ github.event.repository.name }}
+      namespace: ${{ github.event.repository.name }}
+      values_filename: values-prod.yaml
+      cluster: ${{ matrix.cluster }}
+      region: ${{ matrix.region }}
+    secrets: inherit
