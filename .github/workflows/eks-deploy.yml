@@ -12,7 +12,10 @@ on:
       namespace:
         required: true
         type: string
-      clusters:
+      cluster:
+        required: true
+        type: string
+      region:
         required: true
         type: string
       values_filename:
@@ -26,9 +29,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    strategy:
-      matrix:
-        include: ${{ fromJson(inputs.clusters) }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -36,13 +36,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/oidc/github-deploy
-          aws-region: ${{ matrix.region }}
+          aws-region: ${{ inputs.region }}
       - name: Connect to EKS cluster
-        run: aws eks --region ${{ matrix.region }} update-kubeconfig --name ${{ matrix.name }}
+        run: aws eks --region ${{ inputs.region }} update-kubeconfig --name ${{ inputs.cluster }}
       - name: Deploy to EKS
         run: >
           helm upgrade --install -n ${{ inputs.namespace }} ${{ inputs.service_name }} ./chart
           -f ./chart/${{ inputs.values_filename }}
           --set image.tag=${{ github.sha }}
           --set awsAccountID=${{ secrets.AWS_ACCOUNT_ID }}
-          --set awsRegion=${{ matrix.region }}
+          --set awsRegion=${{ inputs.region }}

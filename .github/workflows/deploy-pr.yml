@@ -51,8 +51,6 @@ jobs:
       environment: stage-manual
       service_name: ${{ github.event.repository.name }}
       namespace: ${{ github.event.repository.name }}
-      clusters: >-
-        [
-          {"region":${{ matrix.region }}, "name": ${{ matrix.cluster }}}
-        ]
+      cluster: ${{ matrix.cluster }}
+      region: ${{ matrix.region }}
     secrets: inherit
