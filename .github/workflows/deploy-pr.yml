@@ -38,7 +38,7 @@ jobs:
         uses: ./.github/actions/gh-actions/eks-list-clusters
         with:
           aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-          aws_region_list: "us-east-1 us-west-1"
+          aws_region_list: "us-east-1"
           environment: "stage"
 
   deploy-eks-stage-manual:
