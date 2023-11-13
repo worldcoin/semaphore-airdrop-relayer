@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: worldcoin/gh-actions
-          ref: v2
+          ref: ecr-build-and-push-v3
           token: ${{ secrets.GIT_HUB_TOKEN }}
           path: .github/actions/gh-actions
       - name: Build & Push to ECR
