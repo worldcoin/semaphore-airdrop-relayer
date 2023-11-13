@@ -20,8 +20,15 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Checkout GitHub Action Repo
+        uses: actions/checkout@v2
+        with:
+          repository: worldcoin/gh-actions
+          ref: v2
+          token: ${{ secrets.GIT_HUB_TOKEN }}
+          path: .github/actions/gh-actions
       - name: Build & Push to ECR
-        uses: worldcoin/gh-actions/ecr-build-and-push@ecr-build-and-push-v3
+        uses: ./.github/actions/gh-actions/ecr-build-and-push
         with:
           ecr_repo: ${{ inputs.ecr_repo }}
           aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
