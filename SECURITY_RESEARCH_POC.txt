@@ -1,0 +1,5 @@
+Security Research PoC
+Researcher: looser134
+Date: 2026-08-25
+Purpose: Demonstrating CI/CD vulnerability for responsible disclosure
+This file proves external PR code executes in Worldcoin CI environment
